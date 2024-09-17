@@ -133,6 +133,7 @@ public class Main {
 
 
 
+        
         import java.util.Arrays;
 import java.util.Scanner;
 
@@ -322,6 +323,251 @@ import java.util.Scanner;
                 return new String(characters);
             }
         }
+        // Deklaracja tablicy 10 liczb rzeczywistych
+        int[] tablica = new int[10];
+
+        // Wypełnianie tablicy pierwiastkami kwadratowymi jej indeksów
+        for (int i = 0; i < tablica.length; i++) {
+            tablica[i] = (int) Math.sqrt(i);
+        }
+        // Wyświetlenie wartości w tablicy
+        for (int value : tablica) {
+            System.out.println(value);
+        }
+        //fibonacci
+
+
+
+
+        // Deklaracja i inicjalizacja tablicy na liczby Fibonacciego
+        int[] fibonacci = new int[40];
+        fibonacci[0] = 0;
+        fibonacci[1] = 1;
+
+        // Wypełnienie tablicy liczbami ciągu Fibonacciego
+        for (int i = 2; i < fibonacci.length; i++) {
+            fibonacci[i] = fibonacci[i - 1] + fibonacci[i - 2];
+        }
+
+        // Wczytanie liczby od użytkownika
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Podaj liczbę: ");
+        int number = scanner.nextInt();
+
+        // Wyszukiwanie najbliższej liczby Fibonacciego przy użyciu wyszukiwania binarnego
+        int closestFib = findClosestFibonacci(fibonacci, number);
+
+        System.out.println("Najbliższa liczba Fibonacciego do podanej liczby " + number + " to: " + closestFib);
+    }
+
+    // Funkcja do znajdowania najbliższej liczby Fibonacciego przy użyciu algorytmu wyszukiwania binarnego
+    public static int findClosestFibonacci(int[] fibonacci, int target) {
+        int left = 0;
+        int right = fibonacci.length - 1;
+
+        // Algorytm wyszukiwania binarnego
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (fibonacci[mid] == target) {
+                return fibonacci[mid]; // Dokładne dopasowanie
+            }
+
+            if (fibonacci[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        // Jeżeli nie znaleziono dokładnej liczby, zwróć najbliższą
+        // Sprawdzenie czy lewa czy prawa strona jest bliższa
+        if (left >= fibonacci.length) {
+            return fibonacci[right];
+        }
+        if (right < 0) {
+            return fibonacci[left];
+        }
+
+        // Zwróć bliższą liczbę
+        if (Math.abs(fibonacci[left] - target) < Math.abs(fibonacci[right] - target)) {
+            return fibonacci[left];
+        } else {
+            return fibonacci[right];
+        }
+        //losowe liczby segregowanie
+
+
+
+
+
+        // Deklaracja tablicy liczb całkowitych
+        int[] liczby = new int[100];
+        Random random = new Random();
+
+        // Wypełnianie tablicy liczbami losowymi z zakresu od 1 do 100
+        for (int i = 0; i < liczby.length; i++) {
+            liczby[i] = random.nextInt(100) + 1; // Liczby od 1 do 100
+        }
+
+        // Deklaracja kolekcji parzystych i nieparzystych liczb
+        List<Integer> parzyste = new ArrayList<>();
+        List<Integer> nieparzyste = new ArrayList<>();
+
+        // Deklaracja zestawu (Set) do przechowywania unikalnych liczb
+        Set<Integer> unikalneLiczby = new HashSet<>();
+
+        // Wypełnianie kolekcji parzystymi i nieparzystymi liczbami
+        for (int liczba : liczby) {
+            if (liczba % 2 == 0) {
+                parzyste.add(liczba);
+            } else {
+                nieparzyste.add(liczba);
+            }
+
+            // Dodawanie liczby do zestawu unikalnych liczb
+            unikalneLiczby.add(liczba);
+        }
+
+        // Wyświetlanie wyników
+        System.out.println("Liczby parzyste: " + parzyste);
+        System.out.println("Liczby nieparzyste: " + nieparzyste);
+        System.out.println("Liczba różnych wylosowanych liczb: " + unikalneLiczby.size());
+        //mediana
+
+
+
+
+        // Deklaracja tablicy liczb całkowitych (100 liczb losowych z zakresu 1-100)
+        int[] liczby = new int[100];
+        Random random = new Random();
+
+        // Wypełnianie tablicy liczbami losowymi
+        for (int i = 0; i < liczby.length; i++) {
+            liczby[i] = random.nextInt(100) + 1; // Liczby od 1 do 100
+        }
+
+        // Sortowanie tablicy
+        Arrays.sort(liczby);
+        System.out.println("Posortowana tablica: " + Arrays.toString(liczby));
+
+        // Znalezienie mediany
+        double mediana = znajdzMediane(liczby);
+        System.out.println("Mediana: " + mediana);
+
+        // Znalezienie dominanty
+        int dominanta = znajdzDominante(liczby);
+        System.out.println("Dominanta: " + dominanta);
+
+        // Obliczenie średniej
+        double srednia = znajdzSrednia(liczby);
+        System.out.println("Średnia: " + srednia);
+    }
+
+    // Funkcja do znalezienia mediany
+    public static double znajdzMediane(int[] liczby) {
+        int n = liczby.length;
+        if (n % 2 == 0) {
+            // Jeśli liczba elementów jest parzysta, zwróć średnią dwóch środkowych elementów
+            return (liczby[n / 2 - 1] + liczby[n / 2]) / 2.0;
+        } else {
+            // Jeśli liczba elementów jest nieparzysta, zwróć środkowy element
+            return liczby[n / 2];
+        }
+    }
+
+    // Funkcja do znalezienia dominanty
+    public static int znajdzDominante(int[] liczby) {
+        // Mapa przechowująca liczbę wystąpień każdej liczby
+        Map<Integer, Integer> licznik = new HashMap<>();
+
+        // Liczenie wystąpień każdej liczby
+        for (int liczba : liczby) {
+            licznik.put(liczba, licznik.getOrDefault(liczba, 0) + 1);
+        }
+
+        // Znalezienie liczby o największej liczbie wystąpień
+        int dominanta = liczby[0];
+        int maxWystapien = 0;
+        for (Map.Entry<Integer, Integer> entry : licznik.entrySet()) {
+            if (entry.getValue() > maxWystapien) {
+                maxWystapien = entry.getValue();
+                dominanta = entry.getKey();
+            }
+        }
+
+        return dominanta;
+    }
+
+    // Funkcja do znalezienia średniej
+    public static double znajdzSrednia(int[] liczby) {
+        int suma = 0;
+        for (int liczba : liczby) {
+            suma += liczba;
+        }
+        return (double) suma / liczby.length;
+        //sito erastotenesa
+
+
+
+        
+        // Maksymalna liczba (1000)
+        int max = 1000;
+
+        // Wygenerowanie tablicy liczb pierwszych przy użyciu Sita Eratostenesa
+        List<Integer> liczbyPierwsze = sitoEratostenesa(max);
+
+        // Wczytanie zakresu x i y od użytkownika
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Podaj wartość x (większe od 0): ");
+        int x = scanner.nextInt();
+
+        System.out.print("Podaj wartość y (mniejsze od 1000): ");
+        int y = scanner.nextInt();
+
+        // Sprawdzenie poprawności zakresu
+        if (x <= 0 || y >= 1000 || x > y) {
+            System.out.println("Podano niepoprawny zakres. x musi być większe od 0, a y mniejsze niż 1000, oraz x <= y.");
+            return;
+        }
+
+        // Wyświetlenie liczb pierwszych z zakresu x do y
+        System.out.println("Liczby pierwsze z zakresu od " + x + " do " + y + ":");
+        for (int liczba : liczbyPierwsze) {
+            if (liczba >= x && liczba <= y) {
+                System.out.print(liczba + " ");
+            }
+        }
+    }
+
+    // Metoda do generowania liczb pierwszych przy użyciu Sita Eratostenesa
+    public static List<Integer> sitoEratostenesa(int max) {
+        boolean[] czyPierwsza = new boolean[max + 1]; // Tablica do oznaczania liczb
+        List<Integer> liczbyPierwsze = new ArrayList<>(); // Lista na liczby pierwsze
+
+        // Inicjalizowanie wszystkich liczb jako potencjalnie pierwsze
+        for (int i = 2; i <= max; i++) {
+            czyPierwsza[i] = true;
+        }
+
+        // Algorytm Sita Eratostenesa
+        for (int i = 2; i * i <= max; i++) {
+            if (czyPierwsza[i]) {
+                // Oznaczanie wielokrotności liczby i jako niepierwszych
+                for (int j = i * i; j <= max; j += i) {
+                    czyPierwsza[j] = false;
+                }
+            }
+        }
+
+        // Zbieranie liczb pierwszych do listy
+        for (int i = 2; i <= max; i++) {
+            if (czyPierwsza[i]) {
+                liczbyPierwsze.add(i);
+            }
+        }
+
+        return liczbyPierwsze;
 
     }
 }
